@@ -60,11 +60,15 @@ export default async (client, message) => {
         const last = messages[messages.length - 1];
 
         if (messages.length < config.maxMessageChainLength && last && last.reference) {
-            const msg = await last.channel.messages.fetch(last.reference.messageId);
+            try {
+                const msg = await last.channel.messages.fetch(last.reference.messageId);
 
-            let newMessages = [...messages, msg];
+                let newMessages = [...messages, msg];
 
-            return traverseMessageChain(newMessages);
+                return traverseMessageChain(newMessages);
+            } catch (error) {
+                console.log(error.log);
+            }
         }
 
         let chain = [];
