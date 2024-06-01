@@ -10,6 +10,5 @@
         "systemPrompt": "Enter a system prompt here."
     },
     "maxMessageChainLength": 5,
-    "allowedChannelId": "0",
-    "severityCategory": 0.0
+    "allowedChannelId": ["0", "1"]
 }
