@@ -31,6 +31,7 @@ function getRandomFunnyMessage(): string {
 
 let count: number = 0;
 let onMention: boolean = false;
+let mentioning: boolean = false;
 let replyCount: number = 33;
 
 function mentionCommand(message: Message) {
@@ -73,13 +74,21 @@ client.on("messageCreate", async (message: Message) => {
         return;
     }
 
-    if (message.content === ",onmentions") {
+    if (message.content.trim() === `<@${client.user!.id}> onmentions`) {
         mentionCommand(message);
         return;
     }
 
-    if (message.content.startsWith(",replycount ")) {
-        replyCountCommand(message, parseInt(message.content.split(" ")[1]));
+    if (message.content.trim() === `<@${client.user!.id}> mentioning`) {
+        mentioning = !mentioning;
+        message.reply({
+            content: `Mentioning set to: ${mentioning}`,
+        });
+        return;
+    }
+
+    if (message.content.startsWith(`<@${client.user!.id}> replycount `)) {
+        replyCountCommand(message, parseInt(message.content.split(" ")[2]));
         return;
     }
 
@@ -102,7 +111,7 @@ client.on("messageCreate", async (message: Message) => {
         }
     }
 
-    await openAIRespond(client, message);
+    await openAIRespond(client, message, mentioning);
 });
 
 client.on("ready", async () => {

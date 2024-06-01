@@ -4,7 +4,11 @@ import filter from "../../config/filter.json";
 import ignore from "../../config/ignore.json";
 import { AIMessage, Role } from "./openAIMessage";
 
-async function openAIRespond(client: Client, message: Message) {
+async function openAIRespond(
+    client: Client,
+    message: Message,
+    mentioning: boolean
+) {
     function censorMessage(message: string): string {
         filter.forEach((str: string) => {
             const regex: RegExp = new RegExp(
@@ -159,21 +163,21 @@ async function openAIRespond(client: Client, message: Message) {
             return str.length > maxLength ? str.slice(0, maxLength) : str;
         }
 
-        if (message.author.id === "809245562615758898") {
-            censoredMessage = "<@809245562615758898> " + censoredMessage;
-            message.reply({
-                content: truncateString(censoredMessage, 1999),
-            });
-        } else {
-            try {
+        try {
+            if (mentioning) {
+                message.reply({
+                    failIfNotExists: false,
+                    content: truncateString(censoredMessage, 1999),
+                });
+            } else {
                 message.reply({
                     failIfNotExists: false,
                     content: truncateString(censoredMessage, 1999),
                     allowedMentions: { users: [] },
                 });
-            } catch (error) {
-                console.log(`Error: ${error}`);
             }
+        } catch (error) {
+            console.log(`Error: ${error}`);
         }
     } catch (error) {
         console.error(`Error: ${error}`);
