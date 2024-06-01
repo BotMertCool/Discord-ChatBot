@@ -1,8 +1,8 @@
 import { Client, Message } from "discord.js";
-import { config, getRandomFunnyMessage, openai } from "../main.js";
+import { config, getRandomFunnyMessage, openai } from "../main";
 import filter from "../../config/filter.json";
 import ignore from "../../config/ignore.json";
-import { AIMessage, Role } from "./openAIMessage.js";
+import { AIMessage, Role } from "./openAIMessage";
 
 async function openAIRespond(client: Client, message: Message) {
     function censorMessage(message: string): string {
