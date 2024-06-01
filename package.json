@@ -1,9 +1,12 @@
 {
     "name": "discord-openai",
     "version": "1.0.0",
-    "main": "src/main.js",
+    "main": "dist/src/main.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "dev": "tsx watch src/main.ts",
+        "build": "tsc",
+        "start": "node .",
+        "build-start": "tsc & node ."
     },
     "keywords": [],
     "author": "",
@@ -13,8 +16,9 @@
         "discord.js": "^14.15.2",
         "openai": "^4.47.1"
     },
-    "type": "module",
     "devDependencies": {
-        "eslint": "^9.3.0"
+        "@types/node": "^20.12.12",
+        "eslint": "^9.3.0",
+        "tsx": "^4.11.0"
     }
 }

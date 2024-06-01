@@ -24,7 +24,11 @@ Thumbs.db
 
 # Ignore specifics
 config.json
-blockedwords.csv
+ignore.json
+filter.json
+
+# Output
+dist/
 
 # Ignore package-lock.json (optional, recommended to include in most cases)
 package-lock.json
